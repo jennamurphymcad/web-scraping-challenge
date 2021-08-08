@@ -225,9 +225,21 @@ def scrape_info():
                     new['img_url'] = 'https://marshemispheres.com/' + link['href']
                     content.append(new)        
 
+    mars_data = {
+        "featured_img": featured_image_url,
+        "news_titles": titles,
+        "article_preview": article_teaser,
+        "hemispheres": content
+    }
+
+    # Close the browser after scraping
+    browser.quit()
+
+    # Return results
+    return mars_data
 
 
-    # print(content)
-    return print("content")
+    # # print(content)
+    # return print("content")
 
 
