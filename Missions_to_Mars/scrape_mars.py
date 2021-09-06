@@ -24,10 +24,10 @@ def scrape_info():
     soup = BeautifulSoup(response.text, 'lxml')
 
 
-    print(soup.prettify())
+    # print(soup.prettify())
 
     title = soup.title.text
-    print(title)
+    # print(title)
 
 
     #set up splinter
@@ -44,8 +44,15 @@ def scrape_info():
 
     titles = soup.find_all('div', class_='content_title')
 
-    for title in titles:
-        print(title.text)
+    title_dict_list = []
+
+    # keys = range(4)
+    # for i in keys:
+    for x in titles:
+        dict = {"title" : x}
+        title_dict_list.append(dict)
+    # for title in titles:
+    #     print(title.text)
     # categories = sidebar.find_all('li')
 
     # category_list = []
@@ -71,8 +78,8 @@ def scrape_info():
 
     article_teaser = soup.find_all('div', class_='article_teaser_body')
 
-    for article in article_teaser:
-        print(article.text)
+    # for article in article_teaser:
+    #     print(article.text)
 
 
 
@@ -98,33 +105,34 @@ def scrape_info():
     # # Example:
     # featured_image_url = featured_image['src'].text
 
-    print(featured_image_src)
+    # print(featured_image_src)
 
     featured_image_url = 'https://spaceimages-mars.com/' + featured_image_src
 
 
-    print(featured_image_url)
+    # print(featured_image_url)
 
 
     url_facts = 'https://galaxyfacts-mars.com/'
 
 
     tables = pd.read_html(url_facts)
-    tables
+    # tables
 
 
     df_mars_facts = tables[0]
-    df_mars_facts.head()
+    # df_mars_facts.head()
 
 
     html_table = df_mars_facts.to_html()
-    html_table
+    # html_table
 
 
-    html_table.replace('\n', '')
+    html_table_clean = html_table.replace('\n', '')
+    # html_table_clean
 
     # df.to_html('table.html')
-    df_mars_facts.to_html('table.html')
+    # df_mars_facts.to_html('table.html')
 
 
     # get_ipython().system('open table.html')
@@ -136,9 +144,9 @@ def scrape_info():
 
 
 
-    html = browser.html
+    html_mars = browser.html
     # Parse HTML with Beautiful Soup
-    soup = BeautifulSoup(html, 'html.parser')
+    soup = BeautifulSoup(html_mars, 'html.parser')
     # Retrieve all elements that contain book information
     featured_link = soup.find_all('a', class_='itemLink product-item')
 
@@ -150,7 +158,7 @@ def scrape_info():
 
 
 
-    print(featured_link)
+    # print(featured_link)
 
 
 
@@ -160,18 +168,19 @@ def scrape_info():
     title = []
     title_list = []
     link_click_href = []
+
     for link in featured_link:
     #     if link not in link_click_href:
-        href_link = link['href']
-        link_click_href.append(href_link)
-        for i in link_click_href:
-            if i not in href_list and i != '#':
-                href_list.append(i)
+            href_link = link['href']
+            link_click_href.append(href_link)
+            for i in link_click_href:
+                if i not in href_list and i != '#':
+                    href_list.append(i)
 
                 
 
 
-    print(href_list)
+    # print(href_list)
 
 
     hem_url_list = ['https://marshemispheres.com/' + url for url in href_list]
@@ -185,7 +194,7 @@ def scrape_info():
     #     print("Scraping Complete")
 
 
-    print(hem_url_list)
+    # print(hem_url_list)
 
 
 
@@ -196,40 +205,45 @@ def scrape_info():
     content = []
 
 
+    img_url_link = []
+    title_list = []
+
+
     for link in hem_url_list:
-        url_new = link
-        browser.visit(url_new)
-        html = browser.html
+    #     url_new = link
+        temp_title_list = []
+        browser.visit(link)
+        html_link_click = browser.html
         # Parse HTML with Beautiful Soup
-        soup = BeautifulSoup(html, 'html.parser')
+        soup = BeautifulSoup(html_link_click, 'html.parser')
         # Retrieve all elements that contain book information
-        featured_title = soup.find_all('h2', class_="title")
-
-        featured_link_test = soup.find_all('a')
+        featured_title = soup.find('h2').text
+        title_list.append(featured_title)
+        featured_links = soup.find_all('a')
         
-    #     t_text = title.text
-    #     l_text = link['href']
-    #     if any(d['title'] == title.text for d in content):
 
-        for title in featured_title:
-        #       if title.text not in content.items():
-        #             title_list.append(title.text)
-                    new['title'] = title.text
-                    content.append(new)
+        for link in featured_links:
 
-        for link in featured_link_test:
-    #         if not any(d['img_url'] == link['href'] for d in content):
-        #         if link['href'] not in content.items():
-                if link.text == 'Sample':
-        #                 img_url_link.append(link['href'])
-                    new['img_url'] = 'https://marshemispheres.com/' + link['href']
-                    content.append(new)        
+                if (link.text == 'Sample'):
+
+                    img_url = 'https://marshemispheres.com/' + link['href']
+                    img_url_link.append(img_url) 
+
+    
+    hemisphere_image_urls = []
+    # keys = range(4)
+    # for i in keys:
+    for x, j in zip(title_list, img_url_link):
+            dict = {"title" : x, "img_url": j}
+            hemisphere_image_urls.append(dict)
+
+    print(hemisphere_image_urls)     
 
     mars_data = {
         "featured_img": featured_image_url,
-        "news_titles": titles,
-        "article_preview": article_teaser,
-        "hemispheres": content
+        # "news_titles": title_dict_list,
+        # "article_preview": article_teaser,
+        "hemispheres": hemisphere_image_urls
     }
 
     # Close the browser after scraping

@@ -16,10 +16,22 @@
       <p>Beach. Rainforest. Volcano. Tree House. Sloths.</p>
       <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Get Data!</a></p>
     </div>
-    <img src="{{ mars.featured_img  }}" alt="Sloth">
-    <h2>The typical weather in Costa Rica is:</h2>
-    <h3>Max Temp: {{ mars.max_temp }}</h3>
-    <h3>Min Temp: {{ mars.min_temp }}</h3>
+    <img src="{{ mars.featured_img  }}" alt="featured image">
+    <!-- <h2>The typical weather in Costa Rica is:</h2> -->
+    <div>
+      {% for i in mars.hemispheres %}
+        {% for k,v in i.items() %}
+      <!-- <h1>Key: {{key}}</h1> -->
+        {% if k == 'title' %}
+         <h2>{{ v }}</h2>
+        {% endif%}
+        {%if k == 'img_url'%}
+        <img src="{{v}}" alt="mars image {{v}}">
+        {% endif %}
+    {% endfor %}
+    {% endfor %}
+    </div> 
+
   </div>
   </div>
 </body>
