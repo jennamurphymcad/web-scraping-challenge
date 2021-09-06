@@ -44,43 +44,24 @@ def scrape_info():
 
     titles = soup.find_all('div', class_='content_title')
 
-    title_dict_list = []
+    article_title_list = []
 
-    # keys = range(4)
-    # for i in keys:
-    for x in titles:
-        dict = {"title" : x}
-        title_dict_list.append(dict)
-    # for title in titles:
-    #     print(title.text)
-    # categories = sidebar.find_all('li')
 
-    # category_list = []
-    # url_list = []
-    # book_url_list = []
-    # for category in categories:
-    #     title = category.text.strip()
-    #     category_list.append(title)
-    #     book_url = category.find('a')['href']
-    #     url_list.append(book_url)
+    for title in titles:
+        featured_article_title = title.text
+        article_title_list.append(featured_article_title)
 
-    # book_url_list = ['http://books.toscrape.com/' + url for url in url_list]
-
-    # titles_and_urls = zip(category_list, book_url_list)
-
-    # try:
-    #     for title_url in titles_and_urls:
-    #         browser.links.find_by_partial_text('next').click()
-    # except ElementDoesNotExist:
-    #     print("Scraping Complete")
 
 
 
     article_teaser = soup.find_all('div', class_='article_teaser_body')
 
-    # for article in article_teaser:
-    #     print(article.text)
+    article_teaser_list = []
 
+
+    for article in article_teaser:
+        featured_article_teaser = article.text
+        article_teaser_list.append(featured_article_teaser)
 
 
     url = 'https://spaceimages-mars.com/'
@@ -241,8 +222,9 @@ def scrape_info():
 
     mars_data = {
         "featured_img": featured_image_url,
-        # "news_titles": title_dict_list,
-        # "article_preview": article_teaser,
+        "news_titles": article_title_list,
+        "article": article_teaser_list,
+        "table": html_table_clean,
         "hemispheres": hemisphere_image_urls
     }
 

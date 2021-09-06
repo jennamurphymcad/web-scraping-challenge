@@ -5,77 +5,74 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Costa Rica Weather</title>
+  <title>Mission to Mars | Web Scraping Challenge</title>
   <link rel ="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
   <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+  <style>
+    table, th, td {
+        border-collapse: collapse;
+        border: solid 2px black;
+      }
+    table tr:nth-child(even){
+      background-color: #f2f2f2;
+    }
+
+  </style>
 </head>
 
 <body>
-  <!-- <div class="container"> -->
+  <div class="container">
     <div class="row">
       <div class="col-md-12 jumbotron text-center">
       <h1>Mission to Mars</h1>
       <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Get Data!</a></p>
     </div>
   </div>
+</div>
     <div class="row">
-      <div class="col-sm-3">
-    <img src="{{ mars.featured_img  }}" alt="featured image">
+      <div class="col-md-12">
+      <h2>Latest Mars News</h2>
+      <h4>{{ mars.news_titles[0] }}</h4>
+      <p>{{ mars.article[0] }}</p>
       </div>
     </div>
-    <!-- <h2>The typical weather in Costa Rica is:</h2> -->
-    <!-- <div>
-      {% for i in mars.hemispheres %}
-        {% for k,v in i.items() %}
-      <--<h1>Key: {{key}}</h1> -->
-        <!-- {% if k == 'title' %}
-         <h2>{{ v }}</h2>
-        {% endif%}
-        {%if k == 'img_url'%}
-        <img src="{{v}}" alt="mars image {{v}}">
-        {% endif %}
-    {% endfor %}
-    {% endfor %}
-    </div>   -->
- 
-    <div class="row">
- 
-      <div class="col-3">
 
-        {% for i in mars.hemispheres %}
+    <div class="row">
+      <div class="col-md-6">
+        <h2>Featured Mars Image</h2>
+        <img src="{{ mars.featured_img }}" alt="featured image">
+      </div>
+      <div class="col-md-6">
+        {{ mars.table | safe }}
+      </div>
+    </div>
+
+    <div class="row">
+      {% for i in mars.hemispheres %}
+      <div class="col-md-3">
         {% for k,v in i.items() %}
         <div class="card" style="width: 18rem;">
 
-            {%if k == 'img_url'%}
+          {%if k == 'img_url'%}
           <img class="card-img-top" src="{{v}}" alt="Card image cap">
-            {% endif %}
+          {% endif %}
           <div class="card-body">
             {% if k == 'title' %}
             <h5 class="card-title">{{v}}</h5>
             {% endif %}
 
           </div>
-          {% endfor %}
-          {% endfor %}
+
         </div>
-
-
-
-
-
-      <!-- <div class="col-sm-3">
-        <div class="card">
-          <img class="card-img-top" src="..." alt="Card image cap">
-          <div class="card-body">
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          </div> -->
+        {% endfor %}
       </div>
+      {% endfor %}
     </div>
 
-  </div>
   <!-- </div> -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 
 </body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+
 
 </html>
