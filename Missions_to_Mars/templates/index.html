@@ -9,12 +9,34 @@
   <link rel ="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
   <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
   <style>
+    .jumbotron {
+      background-color: #f2f2f2;
+      margin: 0 auto;
+      padding: 30px;
+    }
+    table {
+      max-width: 100%;
+    }
     table, th, td {
         border-collapse: collapse;
         border: solid 2px black;
       }
     table tr:nth-child(even){
       background-color: #f2f2f2;
+    }
+
+    /* div#table {
+      float: left;
+      max-width: 50%;
+
+    } */
+    #featuredImage img {
+  
+      max-width: 100%;
+    }
+
+    div {
+      padding: 5px;
     }
 
   </style>
@@ -25,10 +47,10 @@
     <div class="row">
       <div class="col-md-12 jumbotron text-center">
       <h1>Mission to Mars</h1>
-      <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Get Data!</a></p>
+      <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Scrape New Data!</a></p>
     </div>
   </div>
-</div>
+<!-- </div> -->
     <div class="row">
       <div class="col-md-12">
       <h2>Latest Mars News</h2>
@@ -38,11 +60,12 @@
     </div>
 
     <div class="row">
-      <div class="col-md-6">
+      <div id="featuredImage" class="col-md-6">
         <h2>Featured Mars Image</h2>
         <img src="{{ mars.featured_img }}" alt="featured image">
       </div>
-      <div class="col-md-6">
+      <div id="table" class="col-md-6">
+        <h3>Mars Facts</h3>
         {{ mars.table | safe }}
       </div>
     </div>
@@ -69,7 +92,7 @@
       {% endfor %}
     </div>
 
-  <!-- </div> -->
+  </div>
 
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>

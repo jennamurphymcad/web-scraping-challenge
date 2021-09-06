@@ -103,9 +103,10 @@ def scrape_info():
 
     df_mars_facts = tables[0]
     # df_mars_facts.head()
+    df_mars_facts_reset = df_mars_facts.rename(columns=df_mars_facts.iloc[0]).drop(df_mars_facts.index[0])
 
 
-    html_table = df_mars_facts.to_html()
+    html_table = df_mars_facts_reset.to_html()
     # html_table
 
 
